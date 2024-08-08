@@ -1,4 +1,4 @@
-This fork follows the [upstream version](http://www.airspayce.com/mikem/arduino/AccelStepper/). Files are slightly reorganized to follow Arduino library conventions to allow for inclusion into the Arduino IDE library manager.
+This fork changes `Multistepper` to make steppers move in the same speed.
 
 Please direct questions and discussion to http://groups.google.com/group/accelstepper
 
