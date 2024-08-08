@@ -28,7 +28,7 @@ void MultiStepper::moveTo(long absolute[])
 	{
 	    _steppers[i]->moveTo(absolute[i]); // New target position (resets speed)
         if (_steppers[i]->currentPosition() < absolute[i]) _steppers[i]->setSpeed(_steppers[i]->maxSpeed());
-        else _steppers[i]->setSpeed(-_steppers[i]->maxSpeed());
+        else _steppers[i]->setSpeed(_steppers[i]->maxSpeed());
 	}
 }
 
