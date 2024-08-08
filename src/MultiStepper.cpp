@@ -21,31 +21,15 @@ boolean MultiStepper::addStepper(AccelStepper& stepper)
 
 void MultiStepper::moveTo(long absolute[])
 {
-    // First find the stepper that will take the longest time to move
-    float longestTime = 0.0;
-
     uint8_t i;
-    for (i = 0; i < _num_steppers; i++)
-    {
-	long thisDistance = absolute[i] - _steppers[i]->currentPosition();
-	float thisTime = abs(thisDistance) / _steppers[i]->maxSpeed();
-
-	if (thisTime > longestTime)
-	    longestTime = thisTime;
-    }
-
-    if (longestTime > 0.0)
-    {
 	// Now work out a new max speed for each stepper so they will all 
 	// arrived at the same time of longestTime
 	for (i = 0; i < _num_steppers; i++)
 	{
-	    long thisDistance = absolute[i] - _steppers[i]->currentPosition();
-	    float thisSpeed = thisDistance / longestTime;
 	    _steppers[i]->moveTo(absolute[i]); // New target position (resets speed)
-	    _steppers[i]->setSpeed(thisSpeed); // New speed
+        if (_steppers[i]->currentPosition() < absolute[i]) _steppers[i]->setSpeed(_steppers[i]->maxSpeed());
+        else _steppers[i]->setSpeed(-_steppers[i]->maxSpeed());
 	}
-    }
 }
 
 // Returns true if any motor is still running to the target position.
